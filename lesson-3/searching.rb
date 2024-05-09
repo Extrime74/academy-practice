@@ -53,6 +53,7 @@ def main
   if result_data.empty?
     puts "Файл с результатом пуст."
   else
+    result_data.each { |line| puts line }
     puts "Файл 'results.txt' сохранен."
   end
 end
