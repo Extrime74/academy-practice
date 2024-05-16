@@ -1,4 +1,3 @@
-
 def cs_word
   puts 'Введите слово: '
   word = gets.chomp

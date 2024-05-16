@@ -17,5 +17,3 @@ def pokemons
     puts pokemons_array
   end
 end
-
-pokemons
