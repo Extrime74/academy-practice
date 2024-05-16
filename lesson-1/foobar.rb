@@ -10,5 +10,3 @@ puts "Введи первое число:"
 first_number = gets.to_i
 puts "Введи второе число:"
 second_number = gets.to_i
-
-foobar(first_number, second_number)

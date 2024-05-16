@@ -12,5 +12,3 @@ puts "Введи свою фамилию:"
 surname = gets.chomp
 puts "Введи свой возраст:"
 age = gets.to_i
-
-greeting(name, surname, age)
