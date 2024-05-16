@@ -1,48 +1,52 @@
 require_relative 'cash_machine'
 
 RSpec.describe Account do
-  let(:balance_file) { "balance.txt" }
   let(:starting_balance) { 100.0 }
+  let(:input) { StringIO.new }
+  let(:output) { StringIO.new }
 
   before do
-    @account = Account.new
-    # Перехват и переопределение stdout
-    @original_stdout = $stdout
-    $stdout = StringIO.new
-  end
-
-  after do
-    $stdout = @original_stdout
-    File.delete(balance_file) if File.exist?(balance_file)
+    @account = Account.new(starting_balance)
+    allow_any_instance_of(Account).to receive(:gets).and_return(input)
+    allow($stdout).to receive(:puts).and_return(output)
   end
 
   describe '#deposit' do
-    it 'increases the balance for valid deposit amount' do
-      @account.deposit(50.0)
-      expect(@account.instance_variable_get(:@balance)).to eq(starting_balance + 50.0)
+    it 'increases the balance for a valid deposit amount' do
+      input.puts "50"
+      input.rewind
+      @account.deposit
+      expect(@account.current_balance).to eq(starting_balance + 50)
     end
 
-    it 'does not change the balance for invalid deposit amount' do
-      @account.deposit(-20.0)
-      expect(@account.instance_variable_get(:@balance)).to eq(starting_balance)
+    it 'does not change the balance for an invalid deposit amount' do
+      input.puts "-20"
+      input.rewind
+      @account.deposit
+      expect(@account.current_balance).to eq(starting_balance)
     end
   end
 
   describe '#withdraw' do
-    it 'decreases the balance for valid withdrawal amount' do
-      @account.withdraw(30.0)
-      expect(@account.instance_variable_get(:@balance)).to eq(starting_balance - 30.0)
+    it 'decreases the balance for a valid withdrawal amount' do
+      input.puts "30"
+      input.rewind
+      @account.withdraw
+      expect(@account.current_balance).to eq(starting_balance - 30)
     end
 
-    it 'does not change the balance for invalid withdrawal amount' do
-      @account.withdraw(200.0)
-      expect(@account.instance_variable_get(:@balance)).to eq(starting_balance)
+    it 'does not change the balance for an invalid withdrawal amount' do
+      input.puts "200"
+      input.rewind
+      @account.withdraw
+      expect(@account.current_balance).to eq(starting_balance)
     end
   end
 
-  describe '#display_balance' do
-    it 'displays the current balance' do
-      expect { @account.display_balance }.to output("Ваш баланс: #{starting_balance}\n").to_stdout
+  describe '#quit' do
+    it 'saves the balance to a file and ends the program' do
+      expect(File).to receive(:write).with(Anything, starting_balance.to_s)
+      @account.quit
     end
   end
 end
