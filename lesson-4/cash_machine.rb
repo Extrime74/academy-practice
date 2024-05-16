@@ -65,5 +65,3 @@ class Account
     end
   end
 end
-
-Account.new.init
