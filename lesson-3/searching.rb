@@ -57,5 +57,3 @@ def main
     puts "Файл 'results.txt' сохранен."
   end
 end
-
-main
