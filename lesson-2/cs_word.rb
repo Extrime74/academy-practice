@@ -7,5 +7,3 @@ def cs_word
     word.reverse
   end
 end
-
-puts cs_word
