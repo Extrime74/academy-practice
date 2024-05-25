@@ -38,16 +38,19 @@ end
 
 
 def delete(id)
-	line_num = 0
+  lines = File.readlines(TASK_FILE)
+  
+  if id.to_i <= lines.length
+    deleted_artist = lines.delete_at(id.to_i - 1)
 
-	File.foreach(TASK_FILE) do |line|
-    line_num += 1
-    line.delete_at(id) if line_num == id.to_i
-	end
+    File.open(TASK_FILE, 'w') do |file|
+      file.puts lines
+    end
 
-	file.close
-	File.write(TASK_FILE, File.read(BUFFER))
-	File.delete(BUFFER) if File.exist?(BUFFER)
+    deleted_artist
+  else
+    puts "ID out of range"
+  end
 end
 
 
