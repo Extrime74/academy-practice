@@ -1,18 +1,26 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Users" %>
-
 <h1>Users</h1>
 
-<div id="users">
-  <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
-  <% end %>
-</div>
+<table id="Users">
+  <thead>
+    <tr>
+      <th>E-Mail</th>
+      <th>Full name</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |users| %>
+      <tr>
+        <td><%= users.email %></td>
+        <td><%= users.last_name + ' ' + users.first_name %></td>
+        <td><%= link_to "Show this user", users%> </td>
+      </tr>      
+      <% end %>
+  </tbody>
 
-<br>
+
+</table> 
 
 <%= link_to "New user", new_user_path %>
