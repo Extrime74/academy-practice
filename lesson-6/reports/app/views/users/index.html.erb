@@ -6,7 +6,8 @@
   <thead>
     <tr>
       <th>E-Mail</th>
-      <th>Full name</th>
+      <th>Last name</th>
+      <th>Firsr name</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -14,7 +15,8 @@
     <% @users.each do |users| %>
       <tr>
         <td><%= users.email %></td>
-        <td><%= users.last_name + ' ' + users.first_name %></td>
+        <td><%= users.last_name %></td>
+        <td><%= users.first_name %></td>
         <td><%= link_to "Show this user", users%> </td>
       </tr>      
       <% end %>
