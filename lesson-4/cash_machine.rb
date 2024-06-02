@@ -1,17 +1,20 @@
-BALANCE_FILE = "balance.txt"
-STARTING_BALANCE = 100.0
+# frozen_string_literal: true
 
 class Account
   attr_reader :current_balance
 
-  def initialize
-    @balance = File.exist?(BALANCE_FILE) ? File.read(BALANCE_FILE).to_f : STARTING_BALANCE
+  BALANCE_FILE = 'balance.txt'
+
+  def initialize(balance: nil)
+    @balance = if balance.nil?
+                 File.exist?(BALANCE_FILE) ? File.read(BALANCE_FILE).to_f : STARTING_BALANCE
+               else
+                 balance
+               end
   end
 
-  def deposit
-    print "Введите сумму для пополнения: "
-    amount = gets.chomp.to_i
-    if amount > 0
+  def deposit(amount = gets.chomp.to_i)
+    if amount.positive?
       @balance += amount
       puts "Успешно.\n"
     else
@@ -19,27 +22,25 @@ class Account
     end
   end
 
-  def withdraw
-    print "Введите сумму для вывода: "
-    amount = gets.chomp.to_i
-    if amount > 0 && amount <= @balance
+  def current_balance
+    @balance
+  end
+
+  def withdraw(amount = gets.chomp.to_i)
+    if amount.positive? && amount <= @balance
       @balance -= amount
       puts "Успешно.\n"
+    elsif amount <= 0
+      puts "Ошибка: Укажите допустимое значение (Больше, чем 0)\n"
     else
-      if amount <= 0
-        puts "Ошибка: Укажите допустимое значение (Больше, чем 0)\n"
-      else
-        puts "Ошибка: Недостаточно средств.\n"
-      end
+      puts "Ошибка: Недостаточно средств.\n"
     end
   end
 
   def quit
     puts "\nЗавершение программы.\nВаш баланс: #{@balance}"
     File.write(BALANCE_FILE, @balance)
-    false
   end
-
 
   def init
     flag = true
@@ -51,14 +52,15 @@ class Account
       puts '(Q) Quit'
       mode = gets.chomp.upcase
       case mode
-      when "D"
+      when 'D'
         deposit
-      when "W"
+      when 'W'
         withdraw
-      when "B"
+      when 'B'
         puts "\nТекущий баланс: #{@balance}"
-      when "Q"
-        flag = quit
+      when 'Q'
+        flag = false
+        quit
       else
         puts "Некорректный ввод.\n"
       end
