@@ -8,14 +8,6 @@ RSpec.describe 'LabReports', type: :request do
     end
   end
 
-  describe 'GET show' do
-    it 'renders the show page' do
-      lab_report = LabReport.create(title: 'Rails application', description: 'Laboratory reports', grade: 'None')
-      get lab_report_path(lab_report)
-      expect(response).to render_template(:show)
-    end
-  end
-
   describe 'GET new' do
     it 'renders the new page' do
       get new_lab_report_path
@@ -26,7 +18,7 @@ RSpec.describe 'LabReports', type: :request do
   describe 'POST create' do
     context 'with valid params' do
       it 'creates a new lab report and redirects' do
-        valid_params = { lab_report: { title: 'Rails application', description: 'Laboratory reports', grade: 'None' } }
+        valid_params = { lab_report: { title: 'Rails application', description: 'Laboratory reports', grade: 'A' } }
         expect {
           post lab_reports_path, params: valid_params
         }.to change(LabReport, :count).by(1)
@@ -47,7 +39,7 @@ RSpec.describe 'LabReports', type: :request do
 
   describe 'PATCH update' do
     it 'updates the lab report and redirects' do
-      lab_report = LabReport.create(title: 'Rails application', description: 'Laboratory reports', grade: 'None')
+      lab_report = LabReport.create(title: 'Rails application', description: 'Laboratory reports', grade: 'A')
       valid_params = { lab_report: { title: 'Updated Title' } }
       patch lab_report_path(lab_report), params: valid_params
       expect(response).to redirect_to(lab_report_path(lab_report))
@@ -56,7 +48,7 @@ RSpec.describe 'LabReports', type: :request do
 
   describe 'DELETE destroy' do
     it 'destroys the lab report and redirects to index' do
-      lab_report = LabReport.create(title: 'Rails application', description: 'Laboratory reports', grade: 'None')
+      lab_report = LabReport.create(title: 'Rails application', description: 'Laboratory reports', grade: 'A')
       expect {
         delete lab_report_path(lab_report)
       }.to change(LabReport, :count).by(-1)

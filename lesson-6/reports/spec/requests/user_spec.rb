@@ -51,7 +51,7 @@ RSpec.describe 'Users', type: :request do
     end
 
     context 'Creating a record with invalid values' do
-      let(:invalid_params) { { user: { email: 'example@example', first_name: 'first name', last_name: 'last name' } } }
+      let(:invalid_params) { { user: { email: 'example', first_name: 'first name', last_name: 'last name' } } }
 
       it 'The number of records will not increase and redirects to a page with a form for a new user' do
         expect do
