@@ -19,7 +19,16 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="bg-gray-900 text-gray-100">
+    <header class="bg-gray-800 shadow">
+      <% if user_signed_in? %>
+        <span><%= current_user.email %></span>
+        <div class="inline-block">
+          <%= button_to 'Sign out', destroy_user_session_path, method: :delete %>
+        </div>
+      <% end %>
+    </header>
+
     <p style="color: green"><%= notice %></p>  
     <p style="color: red"><%= alert %></p>
     <%= yield %>
