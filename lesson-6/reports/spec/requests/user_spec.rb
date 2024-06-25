@@ -63,7 +63,6 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe 'PATCH update' do
-    subject { response }
     let(:user) { User.create(email: 'example@example.com', first_name: 'first name', last_name: 'last name') }
 
     context 'Updating a record with valid data entered' do
@@ -71,8 +70,8 @@ RSpec.describe 'Users', type: :request do
         { user: { email: 'elpmaxe@example.com' } }
       end
 
+      subject { patch user_path(user), params: valid_params }
       it 'Redirects to the updated user page' do
-        patch user_path(user), params: valid_params
         expect(subject).to redirect_to(user_url(user.id))
       end
     end
@@ -82,8 +81,8 @@ RSpec.describe 'Users', type: :request do
         { user: { email: 'elpmaxe@example' } }
       end
 
+      subject { patch user_path(user), params: invalid_params }
       it 'Render edit page to correct entered data' do
-        patch user_path(user), params: invalid_params
         expect(subject).to render_template(:edit)
       end
     end
