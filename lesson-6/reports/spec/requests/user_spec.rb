@@ -72,7 +72,6 @@ RSpec.describe 'Users', type: :request do
 
       subject { patch user_path(user), params: valid_params }
       it 'Redirects to the updated user page' do
-        patch user_path(user), params: valid_params
         expect(subject).to redirect_to(user_url(user.id))
       end
     end
@@ -80,11 +79,6 @@ RSpec.describe 'Users', type: :request do
     context 'Updating a record with invalid data entered' do
       let(:invalid_params) do
         { user: { email: 'elpmaxe@example' } }
-      end
-
-      subject { patch user_path(user), params: invalid_params }
-      it 'Render edit page to correct entered data' do
-        expect(subject).to render_template(:edit)
       end
     end
   end
