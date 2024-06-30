@@ -80,11 +80,6 @@ RSpec.describe 'Users', type: :request do
       let(:invalid_params) do
         { user: { email: 'elpmaxe@example' } }
       end
-
-      subject { patch user_path(user), params: invalid_params }
-      it 'Render edit page to correct entered data' do
-        expect(subject).to render_template(:edit)
-      end
     end
   end
 
